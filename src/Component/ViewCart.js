@@ -5,18 +5,26 @@ import { Link } from 'react-router-dom';
 function ViewCart(props) {
 
     const [cart, setCart] = useState([])
+    const [useridd, setUseridd] = useState('')
 
     useEffect(() => {
         let userid = localStorage.getItem('User')
-        let UseridParse = JSON.parse(userid)
-        const userID = {
-            user_id: UseridParse.user_id
+        setUseridd(JSON.parse(userid))
+        if (userid === null) {
+            setUseridd('Please Login First')
         }
-        axios.post('https://akashsir.in/myapi/ecom1/api/api-cart-list.php', userID, {
-            headers: { 'Content-Type': 'multipart/form-data' }
-        })
-            .then(res => setCart(res.data.cart))
-            .catch(err => console.log(err))
+        else {
+            let UseridParse = JSON.parse(userid)
+            const userID = {
+                user_id: UseridParse.user_id,
+            }
+            console.log(userID.user_id)
+            axios.post('https://akashsir.in/myapi/ecom1/api/api-cart-list.php', userID, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            })
+                .then(res => setCart(res.data.cart))
+                .catch(err => console.log(err.data))
+        }
     }, [cart])
 
     const handleRemove = id => {
@@ -32,53 +40,114 @@ function ViewCart(props) {
             })
     }
 
-    return (
-        <React.Fragment>
-
-
-            {/* <!-- catg header banner section --> */}
-            <section id="aa-catg-head-banner">
-                <img src="img/fashion/fashion-header-bg-8.jpg" alt="fashion img" />
-                <div className="aa-catg-head-banner-area">
-                    <div className="container">
-                        <div className="aa-catg-head-banner-content">
-                            <h2>Cart Page</h2>
-                            <ol className="breadcrumb">
-                                <li><a href="index.html">Home</a></li>
-                                <li className="active">Cart</li>
-                            </ol>
+    if (useridd) {
+        return (
+            <React.Fragment>
+                {/* <!-- catg header banner section --> */}
+                <section id="aa-catg-head-banner">
+                    <img src="img/fashion/fashion-header-bg-8.jpg" alt="fashion img" />
+                    <div className="aa-catg-head-banner-area">
+                        <div className="container">
+                            <div className="aa-catg-head-banner-content">
+                                <h2>Cart Page</h2>
+                                <ol className="breadcrumb">
+                                    <li><a href="index.html">Home</a></li>
+                                    <li className="active">Cart</li>
+                                </ol>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            {/* <!-- / catg header banner section --> */}
+                </section>
+                {/* <!-- / catg header banner section --> */}
 
-            {/* <!-- Cart view section --> */}
-            <section id="cart-view">
-                <div className="container" />
-                <div className="row">
-                    <div className="col-md-12">
-                        <div className="cart-view-area">
-                            <div className="cart-view-table">
-                                <form action="">
-                                    <div className="table-responsive">
-                                        <table className="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Remove</th>
-                                                    <th>Image</th>
-                                                    <th>Product</th>
-                                                    <th>Price</th>
-                                                </tr>
-                                            </thead>
-                                            {
-                                                cart === undefined ?
-                                                <tbody>
+                {/* <!-- Cart view section --> */}
+                <section id="cart-view">
+                    <div className="container" />
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="cart-view-area">
+                                <div className="cart-view-table">
+                                    <form action="">
+                                        <div className="table-responsive">
+                                            <table className="table">
+                                                <thead>
                                                     <tr>
-                                                        <th style={{textAlign:'center', fontSize:'40px',color:'#ff6666'}} colSpan={4}>Cart is Empty</th>
+                                                        <th>Remove</th>
+                                                        <th>Image</th>
+                                                        <th>Product</th>
+                                                        <th>Price</th>
                                                     </tr>
-                                                </tbody>
-                                                    :   
+                                                </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <th style={{ textAlign: 'center', fontSize: '40px', color: '#ff6666' }} colSpan={4}>{useridd}</th>
+                                                            </tr>
+                                                        </tbody>
+                                            </table>
+                                        </div>
+                                    </form>
+
+                                    {/* <!-- Cart Total view --> */}
+                                    <div className="cart-view-total">
+                                        <a href="#" className="aa-cart-view-btn">Proced to Checkout</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                {/* <!-- / Cart view section --> */}
+            </React.Fragment >
+        )
+    }
+    else {
+        return (
+            <React.Fragment>
+
+
+                {/* <!-- catg header banner section --> */}
+                <section id="aa-catg-head-banner">
+                    <img src="img/fashion/fashion-header-bg-8.jpg" alt="fashion img" />
+                    <div className="aa-catg-head-banner-area">
+                        <div className="container">
+                            <div className="aa-catg-head-banner-content">
+                                <h2>Cart Page</h2>
+                                <ol className="breadcrumb">
+                                    <li><a href="index.html">Home</a></li>
+                                    <li className="active">Cart</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                {/* <!-- / catg header banner section --> */}
+
+                {/* <!-- Cart view section --> */}
+                <section id="cart-view">
+                    <div className="container" />
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="cart-view-area">
+                                <div className="cart-view-table">
+                                    <form action="">
+                                        <div className="table-responsive">
+                                            <table className="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Remove</th>
+                                                        <th>Image</th>
+                                                        <th>Product</th>
+                                                        <th>Price</th>
+                                                    </tr>
+                                                </thead>
+                                                {
+                                                    cart === undefined ?
+                                                        <tbody>
+                                                            <tr>
+                                                                <th style={{ textAlign: 'center', fontSize: '40px', color: '#ff6666' }} colSpan={4}>Cart is Empty</th>
+                                                            </tr>
+                                                        </tbody>
+                                                        :
                                                         cart.map(item =>
                                                             <tbody>
                                                                 <tr>
@@ -90,25 +159,26 @@ function ViewCart(props) {
                                                                 </tr>
                                                             </tbody>
                                                         )
-                                            }
-                                        </table>
-                                    </div>
-                                </form>
+                                                }
+                                            </table>
+                                        </div>
+                                    </form>
 
-                                {/* <!-- Cart Total view --> */}
-                                <div className="cart-view-total">
-                                    <a href="#" className="aa-cart-view-btn">Proced to Checkout</a>
+                                    {/* <!-- Cart Total view --> */}
+                                    <div className="cart-view-total">
+                                        <a href="#" className="aa-cart-view-btn">Proced to Checkout</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            {/* <!-- / Cart view section --> */}
+                </section>
+                {/* <!-- / Cart view section --> */}
 
 
-        </React.Fragment >
-    );
+            </React.Fragment >
+        )
+    };
 }
 
 export default ViewCart;
