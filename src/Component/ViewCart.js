@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function ViewCart(props) {
 
+    const navigate = useNavigate();
     const [cart, setCart] = useState([])
     const [useridd, setUseridd] = useState('')
 
@@ -86,11 +87,6 @@ function ViewCart(props) {
                                             </table>
                                         </div>
                                     </form>
-
-                                    {/* <!-- Cart Total view --> */}
-                                    <div className="cart-view-total">
-                                        <a href="#" className="aa-cart-view-btn">Proced to Checkout</a>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -166,7 +162,7 @@ function ViewCart(props) {
 
                                     {/* <!-- Cart Total view --> */}
                                     <div className="cart-view-total">
-                                        <a href="#" className="aa-cart-view-btn">Proced to Checkout</a>
+                                        <a href="#" className="aa-cart-view-btn" onClick={()=>navigate('/Checkout')}>Proced to Checkout</a>
                                     </div>
                                 </div>
                             </div>
