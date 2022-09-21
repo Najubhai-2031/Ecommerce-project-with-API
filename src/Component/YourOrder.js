@@ -1,10 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function YourOrder(props) {
-
-    const navigate = useNavigate();
 
     const [order, setOrder] = useState([])
     const [useridd, setUseridd] = useState('')
@@ -56,19 +54,13 @@ function YourOrder(props) {
                             <div className="col-md-12">
                                 <div className="cart-view-area">
                                     <div className="cart-view-table">
-                                        
-                                            <h1 style={{ textAlign: 'center', fontSize: '40px', color: '#ff6666' }} colSpan={4}>{useridd}</h1>
-                                        
-                                                {/* <!-- Cart Total view --> */}
-                                                <div className="cart-view-total">
-                                                    <a href="#" className="aa-cart-view-btn" onClick={()=>navigate('/Checkout')}>Proced to Checkout</a>
-                                                </div>
 
-                                            </div>
-                                </div>
+                                        <h1 style={{ textAlign: 'center', fontSize: '40px', color: '#ff6666' }} colSpan={4}>{useridd}</h1>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
                 </section>
                 {/* <!-- / Cart view section --> */}
 
@@ -162,12 +154,6 @@ function YourOrder(props) {
                                                 </div>
                                             </form>
                                         )}
-
-
-                                        {/* <!-- Cart Total view --> */}
-                                        <div className="cart-view-total">
-                                            <a href="#" className="aa-cart-view-btn">Proced to Checkout</a>
-                                        </div>
 
                                     </div>
                                 </div>
