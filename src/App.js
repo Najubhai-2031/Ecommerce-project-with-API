@@ -29,8 +29,8 @@ function App() {
 
   useEffect(() => {
     axios('https://akashsir.in/myapi/ecom1/api/api-view-product.php')
-      .then(res => {setProduct(res.data.product);setIsloding(true)})
-      .catch(err=>setError(err.message))
+      .then(res => { setProduct(res.data.product); setIsloding(true) })
+      .catch(err => setError(err.message))
   })
 
   const ProductDetailss = (item) => {
@@ -40,17 +40,21 @@ function App() {
 
   const handleCart = (id) => {
     const user = localStorage.getItem('User')
-    let userParse = JSON.parse(user)
-
-    const Cart = {
-      user_id: userParse.user_id,
-      product_id: id,
-      product_qty: 1
+    if (user === null) {
+      setMessage('Login First')
     }
-    axios.post('https://akashsir.in/myapi/ecom1/api/api-cart-insert.php', Cart, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
-      .then(res => setMessage(res.data.message))
+    else {
+      let userParse = JSON.parse(user)
+      const Cart = {
+        user_id: userParse.user_id,
+        product_id: id,
+        product_qty: 1
+      }
+      axios.post('https://akashsir.in/myapi/ecom1/api/api-cart-insert.php', Cart, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      })
+        .then(res => {setMessage(res.data.message);alert(message)})
+    }
   }
 
   return (
@@ -64,7 +68,7 @@ function App() {
           <Route path='/Login' element={<Login />} />
           <Route path='/ChangePassword' element={<ChangePassword />} />
           <Route path='/ForgotPassword' element={<ForgotPassword />} />
-          <Route path='/Product' element={<Products product={product} error={error} isloading={isloading} message={message} handleCart={handleCart} ProductDetailss={ProductDetailss} />} />
+          <Route path='/Product' element={<Products product={product} error={error} isloading={isloading} message={message}  handleCart={handleCart} ProductDetailss={ProductDetailss} />} />
           <Route path='/ProductDetails' element={<ProductDetails handleCart={handleCart} message={message} />} />
           <Route path='/Cart' element={<ViewCart />} />
           <Route path='/Checkout' element={<MakeOrder />} />
